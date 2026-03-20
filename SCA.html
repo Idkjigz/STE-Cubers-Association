@@ -1381,6 +1381,24 @@
 
         // Initialize
         document.addEventListener('DOMContentLoaded', () => {
+            
+
+    // ✅ ADD THIS EVENT
+    const existing = events.find(e => e.name === "2025-26 SY End Event");
+
+    if (!existing) {
+        events.push({
+            id: "event-sy-end-2026",
+            name: "2025-26 SY End Event",
+            date: "2026-03-28",
+            location: "Irosin",
+            competitors: [],
+            createdAt: new Date().toISOString()
+        });
+        saveToStorage();
+    }
+
+    
             updateStats();
             renderRankings();
             renderEvents();
