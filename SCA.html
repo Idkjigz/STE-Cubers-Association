@@ -1,0 +1,2014 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SCA - STE Cubing Association</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #d32f2f;
+            --primary-dark: #b71c1c;
+            --primary-light: #ffcdd2;
+            --secondary: #1976d2;
+            --bg: #f5f5f5;
+            --card: #ffffff;
+            --text: #212121;
+            --text-light: #757575;
+            --border: #e0e0e0;
+            --success: #4caf50;
+            --warning: #ff9800;
+            --shadow: 0 2px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 32px rgba(0,0,0,0.15);
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow-lg);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .logo-icon {
+            width: 50px;
+            height: 50px;
+            background: white;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+        }
+
+        .logo-text h1 {
+            font-size: 1.5rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+        }
+
+        .logo-text span {
+            font-size: 0.875rem;
+            opacity: 0.9;
+            font-weight: 500;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-btn {
+            background: rgba(255,255,255,0.15);
+            border: none;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover, .nav-btn.active {
+            background: white;
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Stats Overview */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stat-card h3 {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            color: var(--primary);
+            line-height: 1;
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+        }
+
+        /* Controls Section */
+        .controls {
+            background: var(--card);
+            padding: 1.5rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            margin-bottom: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-group label {
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: 0.875rem;
+        }
+
+        select, input {
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+            background: white;
+        }
+
+        select:focus, input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .btn {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(211, 47, 47, 0.3);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #1565c0;
+            transform: translateY(-2px);
+        }
+
+        .btn-danger {
+            background: #f44336;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #d32f2f;
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        .btn-warning {
+            background: var(--warning);
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background: #f57c00;
+        }
+
+        /* Event Cards */
+        .events-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .event-card {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .event-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-light);
+        }
+
+        .event-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: start;
+        }
+
+        .event-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .event-date {
+            font-size: 0.875rem;
+            opacity: 0.9;
+        }
+
+        .event-actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon-small {
+            width: 28px;
+            height: 28px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.2);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .btn-icon-small:hover {
+            background: white;
+            color: var(--primary);
+        }
+
+        .event-body {
+            padding: 1.25rem;
+        }
+
+        .event-stats {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 1rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .event-stat {
+            text-align: center;
+        }
+
+        .event-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .event-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .event-competitors-preview {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .competitor-avatars {
+            display: flex;
+            align-items: center;
+        }
+
+        .avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: var(--primary-light);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 0.75rem;
+            border: 2px solid white;
+            margin-left: -8px;
+        }
+
+        .avatar:first-child {
+            margin-left: 0;
+        }
+
+        .btn-manage {
+            font-size: 0.875rem;
+            padding: 0.5rem 1rem;
+        }
+
+        /* Table Styles */
+        .table-container {
+            background: var(--card);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 2rem;
+        }
+
+        .table-header {
+            padding: 1.5rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .table-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        thead {
+            background: #fafafa;
+        }
+
+        th {
+            padding: 1rem 1.5rem;
+            text-align: left;
+            font-weight: 600;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-light);
+            border-bottom: 2px solid var(--border);
+            cursor: pointer;
+            user-select: none;
+            transition: background 0.3s;
+        }
+
+        th:hover {
+            background: #f0f0f0;
+        }
+
+        td {
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.875rem;
+        }
+
+        tr:hover {
+            background: #fafafa;
+        }
+
+        .rank {
+            font-weight: 800;
+            font-size: 1.25rem;
+            color: var(--primary);
+            width: 50px;
+        }
+
+        .rank.top-3 {
+            color: #ffd700;
+            text-shadow: 0 0 10px rgba(255, 215, 0, 0.3);
+        }
+
+        .cuber-name {
+            font-weight: 600;
+            color: var(--text);
+            font-size: 1rem;
+            cursor: pointer;
+            transition: color 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .cuber-name:hover {
+            color: var(--primary);
+            text-decoration: underline;
+        }
+
+        .cuber-name::after {
+            content: "👤";
+            font-size: 0.875rem;
+            opacity: 0.5;
+        }
+
+        .region-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .region-wisdom {
+            background: #e3f2fd;
+            color: #1976d2;
+        }
+
+        .region-prudence {
+            background: #f3e5f5;
+            color: #7b1fa2;
+        }
+
+        .region-ste {
+            background: #e8f5e9;
+            color: #388e3c;
+        }
+
+        .time {
+            font-family: 'Courier New', monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: var(--text);
+        }
+
+        .time-record {
+            color: var(--success);
+            font-weight: 800;
+        }
+
+        .actions {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .btn-icon {
+            width: 32px;
+            height: 32px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            background: transparent;
+        }
+
+        .btn-icon:hover {
+            background: var(--bg);
+            transform: scale(1.1);
+        }
+
+        .btn-icon.edit {
+            color: var(--secondary);
+        }
+
+        .btn-icon.delete {
+            color: #f44336;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s;
+            backdrop-filter: blur(4px);
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: white;
+            border-radius: 20px;
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow: hidden;
+            transform: scale(0.9) translateY(20px);
+            transition: all 0.3s;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .modal.large {
+            max-width: 900px;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1) translateY(0);
+        }
+
+        .modal-header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+            color: white;
+            padding: 1.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .modal-header h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+        }
+
+        .modal-close {
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+
+        .modal-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .modal-body {
+            padding: 1.5rem;
+            overflow-y: auto;
+            max-height: 60vh;
+        }
+
+        .form-group {
+            margin-bottom: 1.25rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            font-size: 0.875rem;
+            color: var(--text);
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 2px solid var(--border);
+            border-radius: 8px;
+            font-family: inherit;
+            font-size: 0.875rem;
+            transition: all 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--primary-light);
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .modal-footer {
+            padding: 1rem 1.5rem;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: flex-end;
+            gap: 0.75rem;
+        }
+
+        .btn-cancel {
+            background: var(--bg);
+            color: var(--text);
+        }
+
+        .btn-cancel:hover {
+            background: var(--border);
+        }
+
+        /* Competitor Management in Event */
+        .competitor-list {
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .competitor-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+            transition: background 0.3s;
+        }
+
+        .competitor-item:hover {
+            background: #fafafa;
+        }
+
+        .competitor-info {
+            flex: 1;
+        }
+
+        .competitor-name {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .competitor-region {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .competitor-times {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+        }
+
+        .time-input-group {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .time-input-group label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 600;
+        }
+
+        .time-input {
+            width: 100px;
+            padding: 0.5rem;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-family: monospace;
+        }
+
+        .btn-remove {
+            color: #f44336;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        /* Profile Modal */
+        .profile-header {
+            text-align: center;
+            padding: 2rem;
+            background: linear-gradient(135deg, var(--primary-light) 0%, white 100%);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            background: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin: 0 auto 1rem;
+            border: 4px solid white;
+            box-shadow: var(--shadow);
+        }
+
+        .profile-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .profile-region {
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .profile-stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 1rem;
+        }
+
+        .profile-stat {
+            text-align: center;
+        }
+
+        .profile-stat-value {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .profile-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+        }
+
+        .profile-events {
+            padding: 1.5rem;
+        }
+
+        .profile-event-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .profile-event-name {
+            font-weight: 600;
+        }
+
+        .profile-event-date {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+
+        .profile-event-times {
+            display: flex;
+            gap: 1.5rem;
+            text-align: right;
+        }
+
+        .profile-time {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .profile-time-label {
+            font-size: 0.625rem;
+            text-transform: uppercase;
+            color: var(--text-light);
+            letter-spacing: 0.5px;
+        }
+
+        .profile-time-value {
+            font-family: monospace;
+            font-weight: 700;
+            font-size: 1.1rem;
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--text-light);
+        }
+
+        .empty-state-icon {
+            font-size: 4rem;
+            margin-bottom: 1rem;
+            opacity: 0.3;
+        }
+
+        .empty-state h3 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text);
+        }
+
+        /* Toast Notification */
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--text);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 12px;
+            box-shadow: var(--shadow-lg);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transform: translateX(400px);
+            opacity: 0;
+            transition: all 0.3s;
+            z-index: 2000;
+        }
+
+        .toast.show {
+            transform: translateX(0);
+            opacity: 1;
+        }
+
+        .toast.success {
+            background: var(--success);
+        }
+
+        .toast.error {
+            background: #f44336;
+        }
+
+        /* Hide sections */
+        .section {
+            display: none;
+        }
+
+        .section.active {
+            display: block;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Add Competitor to Event Section */
+        .add-competitor-section {
+            background: #fafafa;
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 2px dashed var(--border);
+        }
+
+        .competitor-select-row {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-end;
+        }
+
+        .competitor-select-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-group {
+                width: 100%;
+                justify-content: center;
+            }
+
+            .events-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .competitor-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+
+            .competitor-times {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .modal {
+                width: 95%;
+                margin: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">SCA</div>
+                <div class="logo-text">
+                    <h1>STE Cubing Association</h1>
+                    <span>Official Rankings & Events</span>
+                </div>
+            </div>
+            <nav>
+                <button class="nav-btn active" onclick="showSection('rankings')">Rankings</button>
+                <button class="nav-btn" onclick="showSection('events')">Events</button>
+                <button class="nav-btn" onclick="showSection('cubers')">Cubers</button>
+                <button class="nav-btn" onclick="showSection('records')">Records</button>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Stats Overview -->
+        <div class="stats-grid animate-in">
+            <div class="stat-card">
+                <h3>Total Events</h3>
+                <div class="stat-value" id="totalEvents">0</div>
+                <div class="stat-label">Competitions held</div>
+            </div>
+            <div class="stat-card">
+                <h3>Total Cubers</h3>
+                <div class="stat-value" id="totalCubers">0</div>
+                <div class="stat-label">Active competitors</div>
+            </div>
+            <div class="stat-card">
+                <h3>Best Single</h3>
+                <div class="stat-value" id="bestSingle">--</div>
+                <div class="stat-label">All-time record</div>
+            </div>
+            <div class="stat-card">
+                <h3>Best Average</h3>
+                <div class="stat-value" id="bestAverage">--</div>
+                <div class="stat-label">All-time record</div>
+            </div>
+        </div>
+
+        <!-- Rankings Section -->
+        <div id="rankings" class="section active">
+            <div class="controls">
+                <div class="filter-group">
+                    <label>Region:</label>
+                    <select id="regionFilter" onchange="renderRankings()">
+                        <option value="all">All Regions</option>
+                        <option value="Wisdom">Wisdom</option>
+                        <option value="Prudence">Prudence</option>
+                        <option value="STE">STE</option>
+                    </select>
+                    
+                    <label>Sort by:</label>
+                    <select id="sortBy" onchange="renderRankings()">
+                        <option value="single">Single (Best)</option>
+                        <option value="average">Average (Best)</option>
+                        <option value="name">Name</option>
+                    </select>
+                </div>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn btn-secondary" onclick="exportData()">📥 Export</button>
+                    <button class="btn btn-primary" onclick="openCuberModal()">
+                        <span>+</span> Add Cuber
+                    </button>
+                </div>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>🏆 Global 3x3 Rankings</h2>
+                    <span id="recordCount" style="color: var(--text-light); font-size: 0.875rem;">0 cubers</span>
+                </div>
+                <table id="rankingsTable">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Name</th>
+                            <th>Region</th>
+                            <th>Single</th>
+                            <th>Average</th>
+                            <th>Events</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="rankingsBody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+                <div id="emptyState" class="empty-state" style="display: none;">
+                    <div class="empty-state-icon">🎯</div>
+                    <h3>No cubers yet</h3>
+                    <p>Add your first cuber to start tracking rankings!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Events Section -->
+        <div id="events" class="section">
+            <div class="controls">
+                <div class="filter-group">
+                    <label>Filter:</label>
+                    <select id="eventFilter" onchange="renderEvents()">
+                        <option value="all">All Events</option>
+                        <option value="upcoming">Upcoming</option>
+                        <option value="past">Past</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary" onclick="openEventModal()">
+                    <span>+</span> Create Event
+                </button>
+            </div>
+
+            <div id="eventsGrid" class="events-grid">
+                <!-- Dynamic event cards -->
+            </div>
+            
+            <div id="emptyEvents" class="empty-state" style="display: none;">
+                <div class="empty-state-icon">📅</div>
+                <h3>No events yet</h3>
+                <p>Create your first competition event!</p>
+            </div>
+        </div>
+
+        <!-- Cubers Management Section -->
+        <div id="cubers" class="section">
+            <div class="controls">
+                <div class="filter-group">
+                    <label>Search:</label>
+                    <input type="text" id="cuberSearch" placeholder="Search cubers..." oninput="renderCubersList()">
+                </div>
+                <button class="btn btn-primary" onclick="openCuberModal()">
+                    <span>+</span> Add Cuber
+                </button>
+            </div>
+
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>👥 Manage Cubers</h2>
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Name</th>
+                            <th>Region</th>
+                            <th>Personal Best</th>
+                            <th>Competitions</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="cubersListBody">
+                        <!-- Dynamic content -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Records Section -->
+        <div id="records" class="section">
+            <div class="table-container">
+                <div class="table-header">
+                    <h2>📊 Regional Records</h2>
+                </div>
+                <div style="padding: 2rem;">
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                        <!-- Wisdom Records -->
+                        <div style="background: #e3f2fd; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #1976d2;">
+                            <h3 style="color: #1976d2; margin-bottom: 1rem; font-size: 1.25rem;">🧠 Wisdom Region</h3>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.25rem;">Best Single</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #1976d2;" id="wisdomSingle">--</div>
+                                <div style="font-size: 0.875rem; color: #666;" id="wisdomSingleHolder">-</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.25rem;">Best Average</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #1976d2;" id="wisdomAverage">--</div>
+                                <div style="font-size: 0.875rem; color: #666;" id="wisdomAverageHolder">-</div>
+                            </div>
+                        </div>
+
+                        <!-- Prudence Records -->
+                        <div style="background: #f3e5f5; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #7b1fa2;">
+                            <h3 style="color: #7b1fa2; margin-bottom: 1rem; font-size: 1.25rem;">🛡️ Prudence Region</h3>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.25rem;">Best Single</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #7b1fa2;" id="prudenceSingle">--</div>
+                                <div style="font-size: 0.875rem; color: #666;" id="prudenceSingleHolder">-</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.25rem;">Best Average</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #7b1fa2;" id="prudenceAverage">--</div>
+                                <div style="font-size: 0.875rem; color: #666;" id="prudenceAverageHolder">-</div>
+                            </div>
+                        </div>
+
+                        <!-- STE Records -->
+                        <div style="background: #e8f5e9; padding: 1.5rem; border-radius: 12px; border-left: 4px solid #388e3c;">
+                            <h3 style="color: #388e3c; margin-bottom: 1rem; font-size: 1.25rem;">⚡ STE Region</h3>
+                            <div style="margin-bottom: 1rem;">
+                                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.25rem;">Best Single</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #388e3c;" id="steSingle">--</div>
+                                <div style="font-size: 0.875rem; color: #666;" id="steSingleHolder">-</div>
+                            </div>
+                            <div>
+                                <div style="font-size: 0.875rem; color: #666; margin-bottom: 0.25rem;">Best Average</div>
+                                <div style="font-size: 1.5rem; font-weight: 700; color: #388e3c;" id="steAverage">--</div>
+                                <div style="font-size: 0.875rem; color: #666;" id="steAverageHolder">-</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Cuber Modal (Add/Edit) -->
+    <div class="modal-overlay" id="cuberModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="cuberModalTitle">Add New Cuber</h2>
+                <button class="modal-close" onclick="closeModal('cuberModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="cuberForm">
+                    <input type="hidden" id="cuberId">
+                    <div class="form-group">
+                        <label for="cuberName">Full Name *</label>
+                        <input type="text" id="cuberName" required placeholder="Enter cuber name">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="cuberRegion">Region *</label>
+                        <select id="cuberRegion" required>
+                            <option value="">Select Region</option>
+                            <option value="Wisdom">Wisdom</option>
+                            <option value="Prudence">Prudence</option>
+                            <option value="STE">STE</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cuberSingle">Personal Best Single (seconds)</label>
+                            <input type="number" id="cuberSingle" step="0.01" min="0.01" placeholder="e.g., 9.58">
+                        </div>
+                        <div class="form-group">
+                            <label for="cuberAverage">Personal Best Average (seconds)</label>
+                            <input type="number" id="cuberAverage" step="0.01" min="0.01" placeholder="e.g., 12.34">
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeModal('cuberModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCuber()">Save Cuber</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Event Modal (Add/Edit) -->
+    <div class="modal-overlay" id="eventModal">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="eventModalTitle">Create New Event</h2>
+                <button class="modal-close" onclick="closeModal('eventModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="eventForm">
+                    <input type="hidden" id="eventId">
+                    <div class="form-group">
+                        <label for="eventName">Event Name *</label>
+                        <input type="text" id="eventName" required placeholder="e.g., STE Championship 2026">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="eventDate">Date *</label>
+                        <input type="date" id="eventDate" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="eventLocation">Location</label>
+                        <input type="text" id="eventLocation" placeholder="e.g., STE Main Hall">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-cancel" onclick="closeModal('eventModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveEvent()">Save Event</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Manage Event Competitors Modal -->
+    <div class="modal-overlay" id="manageEventModal">
+        <div class="modal large">
+            <div class="modal-header">
+                <h2 id="manageEventTitle">Manage Competitors</h2>
+                <button class="modal-close" onclick="closeModal('manageEventModal')">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="add-competitor-section">
+                    <h3 style="margin-bottom: 1rem; font-size: 1rem;">Add Competitor</h3>
+                    <div class="competitor-select-row">
+                        <div class="form-group">
+                            <label>Select Cuber</label>
+                            <select id="competitorToAdd">
+                                <option value="">Choose a cuber...</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Single (sec)</label>
+                            <input type="number" id="newCompetitorSingle" step="0.01" placeholder="Time">
+                        </div>
+                        <div class="form-group">
+                            <label>Average (sec)</label>
+                            <input type="number" id="newCompetitorAverage" step="0.01" placeholder="Time">
+                        </div>
+                        <button class="btn btn-success" onclick="addCompetitorToEvent()">Add</button>
+                    </div>
+                </div>
+
+                <h3 style="margin-bottom: 1rem; font-size: 1rem;">Current Competitors</h3>
+                <div id="eventCompetitorsList" class="competitor-list">
+                    <!-- Dynamic content -->
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" onclick="closeModal('manageEventModal')">Done</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Profile Modal -->
+    <div class="modal-overlay" id="profileModal">
+        <div class="modal">
+            <div class="modal-header" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+                <h2>Cuber Profile</h2>
+                <button class="modal-close" onclick="closeModal('profileModal')">&times;</button>
+            </div>
+            <div class="modal-body" style="padding: 0;">
+                <div class="profile-header">
+                    <div class="profile-avatar" id="profileAvatar">SC</div>
+                    <div class="profile-name" id="profileName">Sample Cuber</div>
+                    <span class="region-badge region-wisdom profile-region" id="profileRegion">Wisdom</span>
+                    <div class="profile-stats">
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="profileBestSingle">--</div>
+                            <div class="profile-stat-label">Best Single</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="profileBestAvg">--</div>
+                            <div class="profile-stat-label">Best Average</div>
+                        </div>
+                        <div class="profile-stat">
+                            <div class="profile-stat-value" id="profileCompetitions">0</div>
+                            <div class="profile-stat-label">Events</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="profile-events">
+                    <h3 style="margin-bottom: 1rem; font-size: 1.1rem;">Competition History</h3>
+                    <div id="profileEventsList">
+                        <!-- Dynamic content -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="toast" id="toast">
+        <span id="toastIcon">✓</span>
+        <span id="toastMessage">Operation successful</span>
+    </div>
+
+    <script>
+        // Data Management
+        let cubers = JSON.parse(localStorage.getItem('scaCubers')) || [];
+        let events = JSON.parse(localStorage.getItem('scaEvents')) || [];
+        let currentEditId = null;
+        let currentManageEventId = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            updateStats();
+            renderRankings();
+            renderEvents();
+            renderCubersList();
+            updateRecords();
+        });
+
+        // Navigation
+        function showSection(sectionName) {
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.getElementById(sectionName).classList.add('active');
+            
+            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (sectionName === 'events') renderEvents();
+            if (sectionName === 'cubers') renderCubersList();
+            if (sectionName === 'records') updateRecords();
+        }
+
+        // Modal Functions
+        function openCuberModal(editId = null) {
+            const modal = document.getElementById('cuberModal');
+            const form = document.getElementById('cuberForm');
+            const title = document.getElementById('cuberModalTitle');
+            
+            if (editId) {
+                const cuber = cubers.find(c => c.id === editId);
+                title.textContent = 'Edit Cuber';
+                document.getElementById('cuberId').value = cuber.id;
+                document.getElementById('cuberName').value = cuber.name;
+                document.getElementById('cuberRegion').value = cuber.region;
+                document.getElementById('cuberSingle').value = cuber.single || '';
+                document.getElementById('cuberAverage').value = cuber.average || '';
+                currentEditId = editId;
+            } else {
+                title.textContent = 'Add New Cuber';
+                form.reset();
+                document.getElementById('cuberId').value = '';
+                currentEditId = null;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function openEventModal(editId = null) {
+            const modal = document.getElementById('eventModal');
+            const form = document.getElementById('eventForm');
+            const title = document.getElementById('eventModalTitle');
+            
+            if (editId) {
+                const event = events.find(e => e.id === editId);
+                title.textContent = 'Edit Event';
+                document.getElementById('eventId').value = event.id;
+                document.getElementById('eventName').value = event.name;
+                document.getElementById('eventDate').value = event.date;
+                document.getElementById('eventLocation').value = event.location || '';
+                currentEditId = editId;
+            } else {
+                title.textContent = 'Create New Event';
+                form.reset();
+                document.getElementById('eventId').value = '';
+                document.getElementById('eventDate').value = new Date().toISOString().split('T')[0];
+                currentEditId = null;
+            }
+            
+            modal.classList.add('active');
+        }
+
+        function openManageEventModal(eventId) {
+            currentManageEventId = eventId;
+            const event = events.find(e => e.id === eventId);
+            document.getElementById('manageEventTitle').textContent = `Manage: ${event.name}`;
+            
+            // Populate available cubers dropdown
+            const select = document.getElementById('competitorToAdd');
+            select.innerHTML = '<option value="">Choose a cuber...</option>';
+            
+            // Only show cubers not already in event
+            const existingIds = event.competitors.map(c => c.cuberId);
+            const availableCubers = cubers.filter(c => !existingIds.includes(c.id));
+            
+            availableCubers.forEach(cuber => {
+                const option = document.createElement('option');
+                option.value = cuber.id;
+                option.textContent = `${cuber.name} (${cuber.region})`;
+                select.appendChild(option);
+            });
+            
+            renderEventCompetitorsList();
+            document.getElementById('manageEventModal').classList.add('active');
+        }
+
+        function openProfile(cuberId) {
+            const cuber = cubers.find(c => c.id === cuberId);
+            if (!cuber) return;
+
+            // Get all events this cuber participated in
+            const cuberEvents = [];
+            events.forEach(event => {
+                const comp = event.competitors.find(c => c.cuberId === cuberId);
+                if (comp) {
+                    cuberEvents.push({
+                        eventName: event.name,
+                        date: event.date,
+                        single: comp.single,
+                        average: comp.average
+                    });
+                }
+            });
+
+            // Sort by date (newest first)
+            cuberEvents.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            // Update modal
+            document.getElementById('profileAvatar').textContent = cuber.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase();
+            document.getElementById('profileName').textContent = cuber.name;
+            
+            const regionBadge = document.getElementById('profileRegion');
+            regionBadge.textContent = cuber.region;
+            regionBadge.className = `region-badge region-${cuber.region.toLowerCase()} profile-region`;
+            
+            document.getElementById('profileBestSingle').textContent = cuber.single ? formatTime(cuber.single) : '--';
+            document.getElementById('profileBestAvg').textContent = cuber.average ? formatTime(cuber.average) : '--';
+            document.getElementById('profileCompetitions').textContent = cuberEvents.length;
+
+            // Render events list
+            const eventsList = document.getElementById('profileEventsList');
+            if (cuberEvents.length === 0) {
+                eventsList.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-light);">No competition history yet</div>';
+            } else {
+                eventsList.innerHTML = cuberEvents.map(evt => `
+                    <div class="profile-event-item">
+                        <div>
+                            <div class="profile-event-name">${evt.eventName}</div>
+                            <div class="profile-event-date">${formatDate(evt.date)}</div>
+                        </div>
+                        <div class="profile-event-times">
+                            <div class="profile-time">
+                                <span class="profile-time-label">Single</span>
+                                <span class="profile-time-value">${formatTime(evt.single)}</span>
+                            </div>
+                            <div class="profile-time">
+                                <span class="profile-time-label">Average</span>
+                                <span class="profile-time-value">${formatTime(evt.average)}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            document.getElementById('profileModal').classList.add('active');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('active');
+            if (modalId === 'manageEventModal') {
+                currentManageEventId = null;
+                renderEvents();
+                updateStats();
+            }
+        }
+
+        // CRUD Operations - Cubers
+        function saveCuber() {
+            const name = document.getElementById('cuberName').value.trim();
+            const region = document.getElementById('cuberRegion').value;
+            const single = parseFloat(document.getElementById('cuberSingle').value) || null;
+            const average = parseFloat(document.getElementById('cuberAverage').value) || null;
+
+            if (!name || !region) {
+                showToast('Please fill required fields', 'error');
+                return;
+            }
+
+            if (currentEditId) {
+                const index = cubers.findIndex(c => c.id === currentEditId);
+                cubers[index] = { ...cubers[index], name, region, single, average };
+                showToast('Cuber updated successfully!');
+            } else {
+                const newCuber = {
+                    id: Date.now().toString(),
+                    name,
+                    region,
+                    single,
+                    average,
+                    createdAt: new Date().toISOString()
+                };
+                cubers.push(newCuber);
+                showToast('Cuber added successfully!');
+            }
+
+            saveToStorage();
+            renderRankings();
+            renderCubersList();
+            updateStats();
+            closeModal('cuberModal');
+        }
+
+        function deleteCuber(id) {
+            if (!confirm('Are you sure? This will remove the cuber from all events too.')) return;
+            
+            cubers = cubers.filter(c => c.id !== id);
+            
+            // Remove from all events
+            events.forEach(event => {
+                event.competitors = event.competitors.filter(c => c.cuberId !== id);
+            });
+            
+            saveToStorage();
+            renderRankings();
+            renderCubersList();
+            renderEvents();
+            updateStats();
+            showToast('Cuber deleted successfully!');
+        }
+
+        // CRUD Operations - Events
+        function saveEvent() {
+            const name = document.getElementById('eventName').value.trim();
+            const date = document.getElementById('eventDate').value;
+            const location = document.getElementById('eventLocation').value.trim();
+
+            if (!name || !date) {
+                showToast('Please fill required fields', 'error');
+                return;
+            }
+
+            if (currentEditId) {
+                const index = events.findIndex(e => e.id === currentEditId);
+                events[index] = { ...events[index], name, date, location };
+                showToast('Event updated successfully!');
+            } else {
+                const newEvent = {
+                    id: Date.now().toString(),
+                    name,
+                    date,
+                    location,
+                    competitors: [],
+                    createdAt: new Date().toISOString()
+                };
+                events.push(newEvent);
+                showToast('Event created successfully!');
+            }
+
+            saveToStorage();
+            renderEvents();
+            updateStats();
+            closeModal('eventModal');
+        }
+
+        function deleteEvent(id) {
+            if (!confirm('Are you sure you want to delete this event?')) return;
+            events = events.filter(e => e.id !== id);
+            saveToStorage();
+            renderEvents();
+            updateStats();
+            showToast('Event deleted successfully!');
+        }
+
+        // Event Competitor Management
+        function addCompetitorToEvent() {
+            const cuberId = document.getElementById('competitorToAdd').value;
+            const single = parseFloat(document.getElementById('newCompetitorSingle').value);
+            const average = parseFloat(document.getElementById('newCompetitorAverage').value);
+
+            if (!cuberId || !single || !average) {
+                showToast('Please fill all fields', 'error');
+                return;
+            }
+
+            const event = events.find(e => e.id === currentManageEventId);
+            event.competitors.push({
+                cuberId,
+                single,
+                average,
+                addedAt: new Date().toISOString()
+            });
+
+            // Update cuber's personal bests if better
+            const cuber = cubers.find(c => c.id === cuberId);
+            if (!cuber.single || single < cuber.single) cuber.single = single;
+            if (!cuber.average || average < cuber.average) cuber.average = average;
+
+            saveToStorage();
+            
+            // Reset inputs
+            document.getElementById('competitorToAdd').value = '';
+            document.getElementById('newCompetitorSingle').value = '';
+            document.getElementById('newCompetitorAverage').value = '';
+            
+            // Refresh lists
+            openManageEventModal(currentManageEventId);
+            renderRankings();
+            updateStats();
+            showToast('Competitor added!');
+        }
+
+        function removeCompetitorFromEvent(cuberId) {
+            const event = events.find(e => e.id === currentManageEventId);
+            event.competitors = event.competitors.filter(c => c.cuberId !== cuberId);
+            saveToStorage();
+            openManageEventModal(currentManageEventId);
+            renderRankings();
+            showToast('Competitor removed');
+        }
+
+        function updateCompetitorTime(cuberId, field, value) {
+            const event = events.find(e => e.id === currentManageEventId);
+            const comp = event.competitors.find(c => c.cuberId === cuberId);
+            if (comp) {
+                comp[field] = parseFloat(value) || 0;
+                saveToStorage();
+                
+                // Update personal bests
+                const cuber = cubers.find(c => c.id === cuberId);
+                const allSingles = events.map(e => {
+                    const c = e.competitors.find(x => x.cuberId === cuberId);
+                    return c ? c.single : Infinity;
+                }).filter(x => x !== Infinity);
+                const allAvgs = events.map(e => {
+                    const c = e.competitors.find(x => x.cuberId === cuberId);
+                    return c ? c.average : Infinity;
+                }).filter(x => x !== Infinity);
+                
+                cuber.single = Math.min(...allSingles);
+                cuber.average = Math.min(...allAvgs);
+                saveToStorage();
+                renderRankings();
+            }
+        }
+
+        // Rendering Functions
+        function renderRankings() {
+            const tbody = document.getElementById('rankingsBody');
+            const regionFilter = document.getElementById('regionFilter').value;
+            const sortBy = document.getElementById('sortBy').value;
+            
+            let filtered = [...cubers];
+            
+            if (regionFilter !== 'all') {
+                filtered = filtered.filter(c => c.region === regionFilter);
+            }
+
+            // Sort
+            filtered.sort((a, b) => {
+                if (sortBy === 'name') {
+                    return a.name.localeCompare(b.name);
+                }
+                const valA = a[sortBy] || Infinity;
+                const valB = b[sortBy] || Infinity;
+                return valA - valB;
+            });
+
+            document.getElementById('recordCount').textContent = `${filtered.length} cuber${filtered.length !== 1 ? 's' : ''}`;
+            
+            if (filtered.length === 0) {
+                tbody.innerHTML = '';
+                document.getElementById('emptyState').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('emptyState').style.display = 'none';
+            
+            tbody.innerHTML = filtered.map((cuber, index) => {
+                const compCount = events.filter(e => e.competitors.some(c => c.cuberId === cuber.id)).length;
+                return `
+                <tr>
+                    <td class="rank ${index < 3 ? 'top-3' : ''}">${index + 1}</td>
+                    <td><span class="cuber-name" onclick="openProfile('${cuber.id}')">${escapeHtml(cuber.name)}</span></td>
+                    <td><span class="region-badge region-${cuber.region.toLowerCase()}">${cuber.region}</span></td>
+                    <td class="time ${index === 0 && sortBy === 'single' ? 'time-record' : ''}">${cuber.single ? formatTime(cuber.single) : '--'}</td>
+                    <td class="time ${index === 0 && sortBy === 'average' ? 'time-record' : ''}">${cuber.average ? formatTime(cuber.average) : '--'}</td>
+                    <td>${compCount}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" onclick="openCuberModal('${cuber.id}')" title="Edit">✏️</button>
+                        <button class="btn-icon delete" onclick="deleteCuber('${cuber.id}')" title="Delete">🗑️</button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function renderEvents() {
+            const grid = document.getElementById('eventsGrid');
+            const filter = document.getElementById('eventFilter').value;
+            
+            let filtered = [...events];
+            const now = new Date().toISOString().split('T')[0];
+            
+            if (filter === 'upcoming') {
+                filtered = filtered.filter(e => e.date >= now);
+            } else if (filter === 'past') {
+                filtered = filtered.filter(e => e.date < now);
+            }
+            
+            filtered.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+            if (filtered.length === 0) {
+                grid.innerHTML = '';
+                document.getElementById('emptyEvents').style.display = 'block';
+                return;
+            }
+            
+            document.getElementById('emptyEvents').style.display = 'none';
+
+            grid.innerHTML = filtered.map(event => {
+                const isPast = event.date < now;
+                return `
+                <div class="event-card">
+                    <div class="event-header">
+                        <div>
+                            <div class="event-title">${escapeHtml(event.name)}</div>
+                            <div class="event-date">${formatDate(event.date)} ${event.location ? '• ' + escapeHtml(event.location) : ''}</div>
+                        </div>
+                        <div class="event-actions">
+                            <button class="btn-icon-small" onclick="openEventModal('${event.id}')" title="Edit">✏️</button>
+                            <button class="btn-icon-small" onclick="deleteEvent('${event.id}')" title="Delete">🗑️</button>
+                        </div>
+                    </div>
+                    <div class="event-body">
+                        <div class="event-stats">
+                            <div class="event-stat">
+                                <div class="event-stat-value">${event.competitors.length}</div>
+                                <div class="event-stat-label">Competitors</div>
+                            </div>
+                            <div class="event-stat">
+                                <div class="event-stat-value">${event.competitors.length > 0 ? formatTime(Math.min(...event.competitors.map(c => c.single))) : '--'}</div>
+                                <div class="event-stat-label">Best Single</div>
+                            </div>
+                            <div class="event-stat">
+                                <div class="event-stat-value">${isPast ? 'Completed' : 'Upcoming'}</div>
+                                <div class="event-stat-label">Status</div>
+                            </div>
+                        </div>
+                        <div class="event-competitors-preview">
+                            <div class="competitor-avatars">
+                                ${event.competitors.slice(0, 5).map((c, i) => {
+                                    const cuber = cubers.find(x => x.id === c.cuberId);
+                                    return cuber ? `<div class="avatar" style="z-index: ${5-i}">${cuber.name.charAt(0)}</div>` : '';
+                                }).join('')}
+                                ${event.competitors.length > 5 ? `<div class="avatar" style="background: #666;">+${event.competitors.length - 5}</div>` : ''}
+                                ${event.competitors.length === 0 ? '<span style="color: var(--text-light); font-size: 0.875rem;">No competitors yet</span>' : ''}
+                            </div>
+                            <button class="btn btn-secondary btn-manage" onclick="openManageEventModal('${event.id}')">
+                                Manage
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function renderEventCompetitorsList() {
+            const container = document.getElementById('eventCompetitorsList');
+            const event = events.find(e => e.id === currentManageEventId);
+            
+            if (!event || event.competitors.length === 0) {
+                container.innerHTML = '<div style="text-align: center; padding: 2rem; color: var(--text-light);">No competitors in this event yet</div>';
+                return;
+            }
+
+            // Sort by single time (best first)
+            const sorted = [...event.competitors].sort((a, b) => a.single - b.single);
+
+            container.innerHTML = sorted.map((comp, index) => {
+                const cuber = cubers.find(c => c.id === comp.cuberId);
+                if (!cuber) return '';
+                return `
+                <div class="competitor-item">
+                    <div style="display: flex; align-items: center; gap: 1rem;">
+                        <span style="font-weight: 800; color: var(--primary); width: 30px;">#${index + 1}</span>
+                        <div class="competitor-info">
+                            <div class="competitor-name">${escapeHtml(cuber.name)}</div>
+                            <div class="competitor-region">${cuber.region}</div>
+                        </div>
+                    </div>
+                    <div class="competitor-times">
+                        <div class="time-input-group">
+                            <label>Single</label>
+                            <input type="number" class="time-input" value="${comp.single}" step="0.01" 
+                                onchange="updateCompetitorTime('${comp.cuberId}', 'single', this.value)">
+                        </div>
+                        <div class="time-input-group">
+                            <label>Average</label>
+                            <input type="number" class="time-input" value="${comp.average}" step="0.01"
+                                onchange="updateCompetitorTime('${comp.cuberId}', 'average', this.value)">
+                        </div>
+                        <button class="btn-remove" onclick="removeCompetitorFromEvent('${comp.cuberId}')" title="Remove">✕</button>
+                    </div>
+                </div>
+            `}).join('');
+        }
+
+        function renderCubersList() {
+            const tbody = document.getElementById('cubersListBody');
+            const search = document.getElementById('cuberSearch').value.toLowerCase();
+            
+            let filtered = cubers.filter(c => c.name.toLowerCase().includes(search));
+            filtered.sort((a, b) => a.name.localeCompare(b.name));
+
+            tbody.innerHTML = filtered.map(cuber => {
+                const compCount = events.filter(e => e.competitors.some(c => c.cuberId === cuber.id)).length;
+                return `
+                <tr>
+                    <td><span class="cuber-name" onclick="openProfile('${cuber.id}')">${escapeHtml(cuber.name)}</span></td>
+                    <td><span class="region-badge region-${cuber.region.toLowerCase()}">${cuber.region}</span></td>
+                    <td class="time">${cuber.single ? formatTime(cuber.single) : '--'} / ${cuber.average ? formatTime(cuber.average) : '--'}</td>
+                    <td>${compCount}</td>
+                    <td class="actions">
+                        <button class="btn-icon edit" onclick="openCuberModal('${cuber.id}')" title="Edit">✏️</button>
+                        <button class="btn-icon delete" onclick="deleteCuber('${cuber.id}')" title="Delete">🗑️</button>
+                    </td>
+                </tr>
+            `}).join('');
+        }
+
+        function updateStats() {
+            document.getElementById('totalEvents').textContent = events.length;
+            document.getElementById('totalCubers').textContent = cubers.length;
+            
+            const allSingles = cubers.map(c => c.single).filter(s => s);
+            const allAvgs = cubers.map(c => c.average).filter(a => a);
+            
+            document.getElementById('bestSingle').textContent = allSingles.length ? formatTime(Math.min(...allSingles)) : '--';
+            document.getElementById('bestAverage').textContent = allAvgs.length ? formatTime(Math.min(...allAvgs)) : '--';
+        }
+
+        function updateRecords() {
+            const regions = ['Wisdom', 'Prudence', 'STE'];
+            const regionIds = ['wisdom', 'prudence', 'ste'];
+            
+            regions.forEach((region, idx) => {
+                const regionCubers = cubers.filter(c => c.region === region);
+                const prefix = regionIds[idx];
+                
+                if (regionCubers.length > 0) {
+                    const validSingles = regionCubers.filter(c => c.single);
+                    const validAvgs = regionCubers.filter(c => c.average);
+                    
+                    if (validSingles.length) {
+                        const bestSingle = validSingles.reduce((min, c) => c.single < min.single ? c : min);
+                        document.getElementById(`${prefix}Single`).textContent = formatTime(bestSingle.single);
+                        document.getElementById(`${prefix}SingleHolder`).textContent = `by ${bestSingle.name}`;
+                    }
+                    
+                    if (validAvgs.length) {
+                        const bestAvg = validAvgs.reduce((min, c) => c.average < min.average ? c : min);
+                        document.getElementById(`${prefix}Average`).textContent = formatTime(bestAvg.average);
+                        document.getElementById(`${prefix}AverageHolder`).textContent = `by ${bestAvg.name}`;
+                    }
+                } else {
+                    document.getElementById(`${prefix}Single`).textContent = '--';
+                    document.getElementById(`${prefix}SingleHolder`).textContent = 'No records';
+                    document.getElementById(`${prefix}Average`).textContent = '--';
+                    document.getElementById(`${prefix}AverageHolder`).textContent = 'No records';
+                }
+            });
+        }
+
+        // Utilities
+        function formatTime(seconds) {
+            if (!seconds || seconds <= 0) return '--';
+            if (seconds < 60) {
+                return seconds.toFixed(2);
+            } else {
+                const mins = Math.floor(seconds / 60);
+                const secs = (seconds % 60).toFixed(2);
+                return `${mins}:${secs.padStart(5, '0')}`;
+            }
+        }
+
+        function formatDate(dateStr) {
+            const date = new Date(dateStr);
+            return date.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function saveToStorage() {
+            localStorage.setItem('scaCubers', JSON.stringify(cubers));
+            localStorage.setItem('scaEvents', JSON.stringify(events));
+        }
+
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const icon = document.getElementById('toastIcon');
+            const msg = document.getElementById('toastMessage');
+            
+            toast.className = 'toast show ' + type;
+            icon.textContent = type === 'success' ? '✓' : '✕';
+            msg.textContent = message;
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        function exportData() {
+            const data = { cubers, events, exportDate: new Date().toISOString() };
+            const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sca-data-${new Date().toISOString().split('T')[0]}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+            showToast('Data exported!');
+        }
+
+        // Close modals on outside click
+        document.querySelectorAll('.modal-overlay').forEach(overlay => {
+            overlay.addEventListener('click', (e) => {
+                if (e.target === overlay) {
+                    overlay.classList.remove('active');
+                }
+            });
+        });
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal-overlay').forEach(m => m.classList.remove('active'));
+            }
+        });
+    </script>
+</body>
+</html>
