@@ -1372,16 +1372,42 @@
         <span id="toastIcon">✓</span>
         <span id="toastMessage">Operation successful</span>
     </div>
-
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js"></script>
     <script>
+        // Initialize Firebase
+const app = firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+db.collection("cubers").onSnapshot(snapshot => {
+    cubers = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    renderRankings();
+});
+
+db.collection("events").onSnapshot(snapshot => {
+    events = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    renderEvents();
+});
         // Data Management
-        let cubers = JSON.parse(localStorage.getItem('scaCubers')) || [];
-        let events = JSON.parse(localStorage.getItem('scaEvents')) || [];
+        let cubers = [];
+        let events = [];
+
+async function loadData() {
+    const cuberSnap = await db.collection("cubers").get();
+    cubers = cuberSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    const eventSnap = await db.collection("events").get();
+    events = eventSnap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+    renderRankings();
+    renderEvents();
+    renderCubersList();
+}
         let currentEditId = null;
         let currentManageEventId = null;
 
         // Initialize
-        document.addEventListener('DOMContentLoaded', () => {
+        document.addEventListener('DOMContentLoaded', loadData);
             
 
     // ✅ ADD THIS EVENT
@@ -1396,7 +1422,13 @@
             competitors: [],
             createdAt: new Date().toISOString()
         });
-        saveToStorage();
+        async function saveCuberToDB(cuber) {
+    await db.collection("cubers").doc(cuber.id).set(cuber);
+}
+
+async function saveEventToDB(event) {
+    await db.collection("events").doc(event.id).set(event);
+}
     }
 
     
@@ -1592,7 +1624,7 @@
                 showToast('Cuber added successfully!');
             }
 
-            saveToStorage();
+            saveCuberToDB(newCuber);
             renderRankings();
             renderCubersList();
             updateStats();
@@ -1609,7 +1641,7 @@
                 event.competitors = event.competitors.filter(c => c.cuberId !== id);
             });
             
-            saveToStorage();
+            saveEventToDB(newEvent);
             renderRankings();
             renderCubersList();
             renderEvents();
